@@ -11,6 +11,8 @@ The official repo is [tomaslin / grails-inviter](https://github.com/tomaslin/gra
 
 ***
 
+[![Build Status](https://secure.travis-ci.org/enr/grails-inviter.png?branch=master)](http://travis-ci.org/enr/grails-inviter)
+
 The grails inviter plugin allows you to quickly import contacts from various social networks and mail providers into your application. 
 
 You can see it in action at http://inviter.cloudfoundry.com
