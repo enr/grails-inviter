@@ -1,7 +1,6 @@
 grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
-//grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.dependency.resolution = {
     // inherit Grails' default dependencies
@@ -28,9 +27,9 @@ grails.project.dependency.resolution = {
               ":rest-client-builder:1.0.2") {
             export = false
         }
-
         compile ":mail:1.0"
         compile ":rest:0.6.1"
         runtime ":resources:1.2.RC2"
+        test ":spock:0.6"
     }
 }

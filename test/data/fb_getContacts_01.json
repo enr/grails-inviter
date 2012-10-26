@@ -1,0 +1,27 @@
+{
+    "data": [
+        {
+            "name": "Rick Boy",
+            "id": "220874536"
+        },
+        {
+            "name": "Angelo Rage",
+            "id": "333999929"
+        },
+        {
+            "name": "Alex Another",
+            "id": "449000089"
+        },
+        {
+            "name": "Laura Wonderful",
+            "id": "556665084"
+        },
+        {
+            "name": "Steven Hawks",
+            "id": "665568925"
+        }
+    ],
+    "paging": {
+        "next": "https://graph.facebook.com/1308322972/friends?access_token=AAAAA&limit=5000&offset=5000&__after_id=1"
+    }
+}
