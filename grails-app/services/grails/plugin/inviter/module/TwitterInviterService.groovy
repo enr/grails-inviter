@@ -12,9 +12,9 @@ import org.scribe.model.Verifier
 
 class TwitterInviterService {
 
-    static transactional = true
 	static def authService
 	static def useEmail = false
+    def inviterOAuthService
 
 	static def messageAttrs = [ 'message', 'contact', 'accessToken' ]
 
@@ -42,16 +42,21 @@ class TwitterInviterService {
 	}
 
 	def getContacts(accessToken) {
-		def currentUser = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/account/verify_credentials.json" )
+		//def currentUser = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/account/verify_credentials.json" )
+        def currentUserResponse = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, "http://api.twitter.com/1/account/verify_credentials.json")
+        def currentUser = JSON.parse( currentUserResponse )
         def currentUserId = currentUser.id
-		def friendsJson = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/followers/ids.json?user_id=${ currentUserId }" )
+        def friendsResponse = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, "http://api.twitter.com/1/followers/ids.json?user_id=${ currentUserId }")
+		//def friendsJson = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/followers/ids.json?user_id=${ currentUserId }" )
+        def friendsJson = JSON.parse( friendsResponse )
 		def contacts = []
         def friends = friendsJson.ids
         
 		// get friend details. 100 at a time due to twitter api limits
 		partition( friends, 100 ).each{ friendList ->
             if (friendList) {
-                def friendDetails = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/users/lookup.json?user_id=${ friendList.join(',') }" )
+                def friendDetailsResponse = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, "http://api.twitter.com/1/users/lookup.json?user_id=${ friendList.join(',') }" )
+                def friendDetails = JSON.parse( friendDetailsResponse )
                 friendDetails.each{
                     def contact = [:]
                     contact.name = "${ it.name } (@${ it.screen_name })"
@@ -72,13 +77,14 @@ class TwitterInviterService {
 		def response = JSON.parse( response )
 		return response
 	}
-
+    /*
 	private def sendRequest( accessToken, method, url ){
 		OAuthRequest request = new OAuthRequest( method, url )
 		authService.signRequest( accessToken, request )
 		def response = request.send();
 		return JSON.parse( response.body )
 	}
+    */
 
 	private def partition(array, size) {
 		def partitions = []

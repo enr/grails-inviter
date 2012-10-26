@@ -12,10 +12,11 @@ import org.scribe.model.Verifier
 
 class GoogleInviterService {
 
-	static transactional = true
 	static def authService
 
 	static useEmail = true
+
+    def inviterOAuthService
 
  	private static final String AUTHORIZE_URL = "https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=";
 
@@ -42,16 +43,19 @@ class GoogleInviterService {
 	}
 
 	def getContacts(accessToken) {
-
+        /*
 		OAuthRequest request = new OAuthRequest(Verb.GET, 'https://www.google.com/m8/feeds/contacts/default/full?max-results=10000');
 		authService.signRequest(accessToken, request)
 		def response = request.send();
+        */
 
+        def response = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, 'https://www.google.com/m8/feeds/contacts/default/full?max-results=10000')
+        
 		def contactList = []
 		def contactListWithoutNames = []
 		def addedContacts = []
 
-		XML.parse(response.body).entry.each { entry ->
+		XML.parse(response).entry.each { entry ->
 
 			entry.email.each { email ->
 

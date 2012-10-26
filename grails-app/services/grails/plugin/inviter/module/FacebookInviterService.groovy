@@ -11,10 +11,10 @@ import org.scribe.model.Verifier
 
 class FacebookInviterService{
 
-	static transactional = true
 	static def authService
 	static def messageAttrs = [ 'message', 'picture', 'link', 'name', 'caption', 'description', 'source' ]
 	static def useEmail = false
+    def inviterOAuthService
 
 	def getAuthDetails( callbackUrl ){
 		if(!authService){
@@ -33,14 +33,17 @@ class FacebookInviterService{
 	}
 
 	def getContacts( accessToken ){
-
+        /*
 		OAuthRequest request = new OAuthRequest( Verb.GET, 'https://graph.facebook.com/me/friends/' );
 		authService.signRequest( accessToken, request )
 		def response = request.send();
+        */
+        
+        def response = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, 'https://graph.facebook.com/me/friends/')
 
 		def contacts = []
 
-		JSON.parse( response.body ).data.each{
+		JSON.parse( response ).data.each{
 
 			def contact = [ : ]
 			contact.name = it.name

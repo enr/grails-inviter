@@ -12,11 +12,13 @@ import org.scribe.model.Verifier
 
 class LinkedinInviterService {
 
-    static transactional = true
 	static def authService
-	static def messageAttrs = [ 'accessToken', 'contact', 'subject', 'message' ]
 
+	static def messageAttrs = [ 'accessToken', 'contact', 'subject', 'message' ]
+    
 	static def useEmail = false
+
+    def inviterOAuthService
 
 	def getAuthDetails(callbackUrl) {
 		if (!authService) {
@@ -42,7 +44,8 @@ class LinkedinInviterService {
 	}
 
 	def getContacts(accessToken) {
-		def connections = sendRequest( accessToken, Verb.GET, "http://api.linkedin.com/v1/people/~/connections" )
+        def response = inviterOAuthService.sendRequest(authService, accessToken, Verb.GET, "http://api.linkedin.com/v1/people/~/connections")
+		def connections = XML.parse( response )
 
 		def contacts = [ ]
 
@@ -88,13 +91,14 @@ class LinkedinInviterService {
 
 	}
 
-
+    /*
 	private def sendRequest( accessToken, method, url ){
 		OAuthRequest request = new OAuthRequest( method, url )
 		authService.signRequest( accessToken, request )
 		def response = request.send();
 		return XML.parse( response.body )
 	}
+    */
 
 	private def partition(array, size) {
 		def partitions = []
