@@ -34,16 +34,19 @@ The plugin currently supports the following networks
 
 * Facebook - writes invitation on user's wall
 * Google - retrieves email
-* Yahoo - retrieves email
 * Twitter - sends a direct message
 * LinkedIn - sends a linkedIn message
+
+Other networks (not tested):
+
+* Yahoo - retrieves email
 * Windows Live - sends an Invitation
 
 
 Warning - read me first
 =======================
 
-This plugin is considered early alpha and should not be used in production. 
+This plugin is considered early alpha and should not be used in production.
 
 
 Facebook
@@ -196,7 +199,7 @@ The views you can overwrite are:
   * inviter/pickContacts.gsp : the view with the 'pick friends' form
   * inviter/sent.gsp : the view displayed after invites have been sent.
 
-You can override the providers' images, putting a png named after the provider in your application `web-app/images` directory.
+You can override the providers' images and empty.png (the image used for users without pic), putting a png named after the provider in your application `web-app/images` directory.
 
 Use the example within the plugin to guide you.
 
