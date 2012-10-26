@@ -1,4 +1,4 @@
-package plugin.grails.inviter
+package grails.plugin.inviter
 
 import groovy.text.Template
 
