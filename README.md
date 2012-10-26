@@ -106,8 +106,8 @@ usage:
 
 The contacts tag. You must also include the inviter css, js and jquery files for this tag to work properly.
 
-		<g:javascript library="inviter" plugin='inviter'/>
-		<link rel='stylesheet' type='text/css' href="${ resource( dir:'css', file:'inviter.css', plugin:'inviter') }" />
+        <r:require module="inviter"/>
+        <r:layoutResources/>
 
 
 iv:messageForm
@@ -118,27 +118,17 @@ This tag creates a submit form to interact with the contact selector and sends a
 params:
 
 		provider - name of the provider, e.g. facebook
-
 		link - the link to embed to the invitation message
-
 		subject - in emails, the subject of the invitation message
-
 		message - the message to embed
-
 		canEditMessages - if enabled, this allows the message to be sent to be customized
-
 		redirectUrl - the Url to return the user to after invitations have been sent
 
-
-        For facebook:
+For facebook:
 
 		description - the description of the link to be sent
-
 		caption - the photo caption
-
 		picture - the image to attach
-
-
 
 usage:
 
@@ -161,31 +151,14 @@ This tag creates a submit form to interact with the contact selector and tell to
 
 In this case the real processing of the contacts, is left to the app.
 
-
 params:
 
         controller [required] - name of the controller as in g:form tag
-        
         action [required] - name of the action as in g:form tag
-
 		provider - name of the provider, e.g. facebook
-
 		link - the link to embed to the invitation message
-
 		subject - in emails, the subject of the invitation message
-
 		redirectUrl - the Url to return the user to after invitations have been sent
-
-
-        For facebook:
-
-		description - the description of the link to be sent
-
-		caption - the photo caption
-
-		picture - the image to attach
-
-
 
 usage:
 
@@ -213,7 +186,7 @@ In test/apps you can find a demo app using [Greenmail Plugin](http://grails.org/
 
 
 Modifying your views
-----------------------------
+--------------------
 
 For most cases, you want to create your own views.
 
@@ -223,6 +196,7 @@ The views you can overwrite are:
   * inviter/pickContacts.gsp : the view with the 'pick friends' form
   * inviter/sent.gsp : the view displayed after invites have been sent.
 
+You can override the providers' images, putting a png named after the provider in your application `web-app/images` directory.
 
 Use the example within the plugin to guide you.
 
@@ -233,7 +207,9 @@ Custom provider
 To add a new provider, simply create a service with a name `${provider}InviterService` implementing needed methods: look at FacebookInviterService and TestInviterService for 
 examples of a service using email and one using custom API.
 
-See DemoInviterService in the test app to see an actual implementation.
+The plugin expects to find a png image named after the provider (put it in the application `web-app/images` dir).
+
+See `DemoInviterService` in the test app to see an actual implementation.
 
 
 Configuration
