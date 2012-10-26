@@ -42,27 +42,26 @@ class TwitterInviterService {
 	}
 
 	def getContacts(accessToken) {
-		def currentUser = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/account/verify_credentials.json" ).id
-
-		def friends = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/followers/ids.json?user_id=${ currentUser }" )
+		def currentUser = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/account/verify_credentials.json" )
+        def currentUserId = currentUser.id
+		def friendsJson = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/followers/ids.json?user_id=${ currentUserId }" )
 		def contacts = []
-
+        def friends = friendsJson.ids
+        
 		// get friend details. 100 at a time due to twitter api limits
 		partition( friends, 100 ).each{ friendList ->
-
-			def friendDetails = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/users/lookup.json?user_id=${ friendList.join(',') }" )
-
-			friendDetails.each{
-				def contact = [:]
-				contact.name = "${ it.name } (@${ it.screen_name })"
-				contact.photo = it.profile_image_url
-				contact.address = it.id
-				contacts << contact
-			}
+            if (friendList) {
+                def friendDetails = sendRequest( accessToken, Verb.GET, "http://api.twitter.com/1/users/lookup.json?user_id=${ friendList.join(',') }" )
+                friendDetails.each{
+                    def contact = [:]
+                    contact.name = "${ it.name } (@${ it.screen_name })"
+                    contact.photo = it.profile_image_url
+                    contact.address = it.id
+                    contacts << contact
+                }
+            }
 		}
-
 		contacts.sort { it.name.toLowerCase() }
-
 	}
 
 	def sendMessage = { attrs ->
@@ -84,7 +83,6 @@ class TwitterInviterService {
 	private def partition(array, size) {
 		def partitions = []
 		int partitionCount = array.size() / size
-
 		partitionCount.times { partitionNumber ->
 			def start = partitionNumber * size
 			def end = start + size - 1
@@ -94,5 +92,4 @@ class TwitterInviterService {
 		if (array.size() % size) partitions << array[partitionCount * size..-1]
 		return partitions
 	}
-
 }
