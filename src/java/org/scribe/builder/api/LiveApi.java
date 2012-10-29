@@ -5,8 +5,12 @@ import org.scribe.extractors.JsonTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.utils.Preconditions;
 
-import static org.scribe.utils.URLUtils.formURLEncode;
+import org.scribe.utils.OAuthEncoder;
 
+/*
+ * scribe 1.2.0: http://grepcode.com/file/repo1.maven.org/maven2/org.scribe/scribe/1.2.0/org/scribe/utils/URLUtils.java
+ * scribe 1.3.2: https://github.com/fernandezpablo85/scribe-java/blob/master/src/main/java/org/scribe/utils/OAuthEncoder.java
+ */
 public class LiveApi extends DefaultApi20 {
 
 	private static final String AUTHORIZE_URL = "https://oauth.live.com/authorize?client_id=%s&redirect_uri=%s&response_type=code";
@@ -23,9 +27,9 @@ public class LiveApi extends DefaultApi20 {
 
 		// Append scope if present
 		if (config.hasScope()) {
-			return String.format(SCOPED_AUTHORIZE_URL, config.getApiKey(), formURLEncode(config.getCallback()), formURLEncode(config.getScope()));
+			return String.format(SCOPED_AUTHORIZE_URL, config.getApiKey(), OAuthEncoder.encode(config.getCallback()), OAuthEncoder.encode(config.getScope()));
 		} else {
-			return String.format(AUTHORIZE_URL, config.getApiKey(), formURLEncode(config.getCallback()));
+			return String.format(AUTHORIZE_URL, config.getApiKey(), OAuthEncoder.encode(config.getCallback()));
 		}
 	}
 

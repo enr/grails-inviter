@@ -45,7 +45,7 @@ grails.project.dependency.resolution = {
 
         runtime ":database-migration:1.1"
         runtime ":hibernate:$grailsVersion"
-        runtime ":resources:1.1.6"
+        runtime ":resources:1.2.RC2"
 
     }
 }
