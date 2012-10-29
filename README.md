@@ -189,6 +189,8 @@ The test service returns a list of 20 contacts with emails.
 
 In test/apps you can find a demo app using [Greenmail Plugin](http://grails.org/plugin/greenmail) to display mail messages not actually sent.
 
+You can overwrite default keys in inviter-demo-config.groovy (ignored by Git).
+
 
 Modifying your views
 --------------------
