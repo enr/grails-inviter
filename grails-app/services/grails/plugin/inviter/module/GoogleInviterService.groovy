@@ -1,7 +1,5 @@
 package grails.plugin.inviter.module
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 import grails.converters.XML
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.GoogleApi
@@ -17,14 +15,16 @@ class GoogleInviterService {
 	static useEmail = true
 
     def inviterOAuthService
+    
+    def grailsApplication
 
  	private static final String AUTHORIZE_URL = "https://www.google.com/accounts/OAuthAuthorizeToken?oauth_token=";
 
 	def getAuthDetails(callbackUrl) {
 		if (!authService) {
 			authService = new ServiceBuilder().provider(GoogleApi.class)
-											  .apiKey(CH.config.grails.plugin.inviter.google.key as String)
-											  .apiSecret(CH.config.grails.plugin.inviter.google.secret as String)
+											  .apiKey(grailsApplication.config.grails.plugin.inviter.google.key as String)
+											  .apiSecret(grailsApplication.config.grails.plugin.inviter.google.secret as String)
 											  .callback(callbackUrl as String)
 											  .scope('https://www.google.com/m8/feeds')
 											  .build()

@@ -1,7 +1,5 @@
 package grails.plugin.inviter.module
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 import grails.converters.deep.JSON
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.FacebookApi
@@ -15,12 +13,13 @@ class FacebookInviterService{
 	static def messageAttrs = [ 'message', 'picture', 'link', 'name', 'caption', 'description', 'source' ]
 	static def useEmail = false
     def inviterOAuthService
+    def grailsApplication
 
 	def getAuthDetails( callbackUrl ){
 		if(!authService){
 			authService = new ServiceBuilder().provider( FacebookApi.class)
-							.apiKey( CH.config.grails.plugin.inviter.facebook.key as String )
-							.apiSecret( CH.config.grails.plugin.inviter.facebook.secret as String )
+							.apiKey( grailsApplication.config.grails.plugin.inviter.facebook.key as String )
+							.apiSecret( grailsApplication.config.grails.plugin.inviter.facebook.secret as String )
 							.scope( 'publish_stream' )
 							.callback( callbackUrl as String ).build()
 		}

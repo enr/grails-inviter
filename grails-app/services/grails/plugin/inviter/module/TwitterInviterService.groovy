@@ -1,7 +1,5 @@
 package grails.plugin.inviter.module
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 import grails.converters.deep.JSON
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.TwitterApi
@@ -18,13 +16,15 @@ class TwitterInviterService {
 
 	static def messageAttrs = [ 'message', 'contact', 'accessToken' ]
 
+    def grailsApplication
+
 	def getAuthDetails(callbackUrl) {
 		if (!authService) {
 
 			authService = new ServiceBuilder()
 							   .provider(TwitterApi.class)
-							   .apiKey( CH.config.grails.plugin.inviter.twitter.key as String )
-							   .apiSecret( CH.config.grails.plugin.inviter.twitter.secret as String )
+							   .apiKey( grailsApplication.config.grails.plugin.inviter.twitter.key as String )
+							   .apiSecret( grailsApplication.config.grails.plugin.inviter.twitter.secret as String )
 							   .callback( callbackUrl as String )
 							   .build();
 			}

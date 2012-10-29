@@ -1,7 +1,5 @@
 package grails.plugin.inviter.module
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
-
 import grails.converters.deep.XML
 import org.scribe.builder.ServiceBuilder
 import org.scribe.builder.api.LinkedInApi
@@ -19,14 +17,16 @@ class LinkedinInviterService {
 	static def useEmail = false
 
     def inviterOAuthService
+    
+    def grailsApplication
 
 	def getAuthDetails(callbackUrl) {
 		if (!authService) {
 
 			authService = new ServiceBuilder()
 							   .provider(LinkedInApi.class)
-							   .apiKey( CH.config.grails.plugin.inviter.linkedin.key as String )
-							   .apiSecret( CH.config.grails.plugin.inviter.linkedin.secret as String )
+							   .apiKey( grailsApplication.config.grails.plugin.inviter.linkedin.key as String )
+							   .apiSecret( grailsApplication.config.grails.plugin.inviter.linkedin.secret as String )
 							   .callback( callbackUrl as String )
 							   .build();
 			}
