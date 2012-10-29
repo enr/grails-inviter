@@ -15,7 +15,6 @@ stacktrace.log
 /target/
 /out/
 /web-app/plugins
-/web-app/WEB-INF/classes
+/web-app/WEB-INF
 *~
 /test/apps/inviter-demo/target
-
