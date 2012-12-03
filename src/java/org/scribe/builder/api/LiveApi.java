@@ -10,6 +10,8 @@ import org.scribe.utils.OAuthEncoder;
 /*
  * scribe 1.2.0: http://grepcode.com/file/repo1.maven.org/maven2/org.scribe/scribe/1.2.0/org/scribe/utils/URLUtils.java
  * scribe 1.3.2: https://github.com/fernandezpablo85/scribe-java/blob/master/src/main/java/org/scribe/utils/OAuthEncoder.java
+ *
+ * see: https://github.com/fernandezpablo85/scribe-java/blob/master/src/main/java/org/scribe/builder/api/LiveApi.java
  */
 public class LiveApi extends DefaultApi20 {
 
