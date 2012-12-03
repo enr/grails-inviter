@@ -35,7 +35,7 @@ Supported Networks
 The plugin currently supports the following networks
 
 * Facebook - writes invitation on user's wall
-* Google - retrieves email
+* Google - sends email to contacts
 * Twitter - sends a direct message
 * LinkedIn - sends a linkedIn message
 
@@ -189,7 +189,7 @@ The test service returns a list of 20 contacts with emails.
 
 In test/apps you can find a demo app using [Greenmail Plugin](http://grails.org/plugin/greenmail) to display mail messages not actually sent.
 
-You can overwrite default keys in inviter-demo-config.groovy (ignored by Git).
+Using the demo application, you can overwrite default authentication keys in `inviter-demo-config.groovy` (ignored by Git).
 
 
 Modifying your views
