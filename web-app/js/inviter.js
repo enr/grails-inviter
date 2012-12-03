@@ -196,6 +196,16 @@ inviter.prototype.selectAll = function() {
     }
 }
 
+inviter.prototype.showSelected = function() {
+    addresses = [];
+    var friends = inviter.getAllFriends();
+    var friendsSize = friends.length;
+    for(var i=0; i<friendsSize; i++) {
+        var friend = friends[i];
+        (friend.className === 'friend selected') ? inviter.show(friend) : inviter.hide(friend) ;
+    }
+}
+
 inviter = new inviter();
 
 inviter.onDomReady(function() {
@@ -238,4 +248,5 @@ inviter.onDomReady(function() {
     filterField.value = INVITER_FILTER_BLANK;
     inviter.bindEvent(document.getElementById('clearSelection'), 'click', inviter.clearSelection);
     inviter.bindEvent(document.getElementById('selectAll'), 'click', inviter.selectAll);
+    inviter.bindEvent(document.getElementById('showSelected'), 'click', inviter.showSelected);
 });

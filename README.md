@@ -234,6 +234,7 @@ Plugin uses following keys:
     grails.plugin.inviter.contacts.search = Find friends :
     grails.plugin.inviter.contacts.selectAll = Select all
     grails.plugin.inviter.contacts.clearSelection = Deselect all
+    grails.plugin.inviter.contacts.showSelected = Show selected
     grails.plugin.inviter.invitationForm.submit = Invite friends
     grails.plugin.inviter.pickForm.submit = Pick friends
 
@@ -377,12 +378,3 @@ Enter these to config.groovy as
 	grails.plugin.inviter.windowslive.secret = 'your client secret'
 
 
-Revision History
-================
-
-0.2.1 - Select All and Deselect All.
-
-0.2 - Added a test service for local testing
-      Moved test project into a test directory
-
-0.1 - Initial Release
