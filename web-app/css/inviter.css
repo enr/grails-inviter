@@ -3,12 +3,13 @@ body {
 }
 
 #filter {
+	font: 12px arial, sans-serif;
 	border: 1px solid #CCCCCC;
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 	height: 32px;
 	margin: 0;
-	padding: 6px 2px;
+	padding: 10px 2px;
 	width: 821px;
 }
 

@@ -1,6 +1,7 @@
-<div id="filter"><span class="filtertext"><g:message code="grails.plugin.inviter.contacts.search"/>&nbsp;</span><g:textField name="filterField" id="filterField" value=""></g:textField>
+<div id="filter">
+    <span class="filtertext"><g:message code="grails.plugin.inviter.contacts.search"/>&nbsp;</span><g:textField name="filterField" id="filterField" value=""></g:textField>
     <div id="selectionHelpers">
-      <a id="showSelected" href="javascript:void(0);"><g:message code="grails.plugin.inviter.contacts.showSelected"/></a> | 
+      <a id="showSelected" href="javascript:void(0);"><g:message code="grails.plugin.inviter.contacts.showSelected"/> (<span id="inv-s-num"></span>)</a> | 
       <a id="selectAll" href="javascript:void(0);"><g:message code="grails.plugin.inviter.contacts.selectAll"/></a> | 
       <a id="clearSelection" href="javascript:void(0);"><g:message code="grails.plugin.inviter.contacts.clearSelection"/></a>
     </div>

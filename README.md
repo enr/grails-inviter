@@ -205,6 +205,8 @@ The views you can overwrite are:
 
 You can override the providers' images and empty.png (the image used for users without pic), putting a png named after the provider in your application `web-app/images` directory.
 
+If your view contains an html element with id "inv-s-num", this element will be updated (via javascript) with the number of currently selected contacts.
+
 Use the example within the plugin to guide you.
 
 
