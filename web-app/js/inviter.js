@@ -1,4 +1,4 @@
-var addresses = [];
+
 var INVITER_FILTER_BLANK = INVITER_FILTER_BLANK || 'start typing a name';
 
 // Array indexOf compatibility
@@ -66,6 +66,8 @@ if (!Array.prototype.filter)
 
 var inviter = inviter || function() {};
 
+inviter.prototype.addresses = [];
+
 inviter.prototype.onDomReady = function(callback){
     if (document.addEventListener) {
         document.addEventListener('DOMContentLoaded', callback, false);
@@ -87,7 +89,7 @@ inviter.prototype.updateSelectedNumber = function() {
     var numNode = document.getElementById('inv-s-num');
     if (!inviter.isUsable(numNode)) { return; }
     var textProperty = document.body.textContent ? 'textContent' : 'innerText';
-    return numNode[textProperty] = addresses.length;
+    return numNode[textProperty] = inviter.addresses.length;
 }
 
 // show friend div. display: inline-block;
@@ -118,16 +120,16 @@ inviter.prototype.getAllFriends = function() {
 
 // adds or removes elements from the list of addresses
 inviter.prototype.toggleAddress = function(address) {
-    var addressIdx = addresses.indexOf(address);
+    var addressIdx = inviter.addresses.indexOf(address);
     if (addressIdx >= 0) {
-        addresses.splice(addressIdx, 1);
+        inviter.addresses.splice(addressIdx, 1);
         var els = inviter.getByEmail(address);
         var elsLen = els.length;
         for(var i=0; i<elsLen; i++) {
             els[i].className = 'friend';
         }
 	} else {
-		addresses.push(address);
+		inviter.addresses.push(address);
         var els = inviter.getByEmail(address);
         var elsLen = els.length;
         for(var i=0; i<elsLen; i++) {
@@ -137,7 +139,7 @@ inviter.prototype.toggleAddress = function(address) {
     inviter.updateSelectedNumber();
     var addressesNode = document.getElementById('addresses');
     if (inviter.isUsable(addressesNode)) {
-        addressesNode.value = addresses.join(',');
+        addressesNode.value = inviter.addresses.join(',');
     }
 }
 
@@ -172,7 +174,7 @@ inviter.prototype.bindEvent = function(element, eventType, handler) {
 }
 
 inviter.prototype.clearSelection = function() {
-    addresses = [];
+    inviter.addresses = [];
     var friends = inviter.getAllFriends();
     var elsLen = friends.length;
     for(var i=0; i<elsLen; i++) {
@@ -186,18 +188,18 @@ inviter.prototype.clearSelection = function() {
 }
 
 inviter.prototype.selectAll = function() {
-    addresses = [];
+    inviter.addresses = [];
     var friends = inviter.getAllFriends();
     var elsLen = friends.length;
     for(var i=0; i<elsLen; i++) {
         var friend = friends[i];
-        addresses.push(friend.getAttribute('data-email'));
+        inviter.addresses.push(friend.getAttribute('data-email'));
         friend.className = 'friend selected';
     }
     inviter.updateSelectedNumber();
     var addressesNode = document.getElementById('addresses');
     if (inviter.isUsable(addressesNode)) {
-        addressesNode.value = addresses.join(',');
+        addressesNode.value = inviter.addresses.join(',');
     }
 }
 
