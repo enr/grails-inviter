@@ -68,11 +68,11 @@ var inviter = inviter || function() {};
 
 inviter.prototype.addresses = [];
 
-inviter.prototype.onDomReady = function(callback){
+inviter.prototype.onDomReady = function(callback) {
     if (document.addEventListener) {
         document.addEventListener('DOMContentLoaded', callback, false);
     } else {
-        if(document.body && document.body.lastChild){
+        if(document.body && document.body.lastChild) {
             callback();
         } else {
             return setTimeout(arguments.callee, 0);
@@ -82,41 +82,40 @@ inviter.prototype.onDomReady = function(callback){
 
 // isNullSafe
 inviter.prototype.isUsable = function(variable) {
-    return (typeof(variable) != 'undefined' && variable != null);
+    return (typeof(variable) != 'undefined' && variable !== null);
 };
 
 inviter.prototype.updateSelectedNumber = function() {
     var numNode = document.getElementById('inv-s-num');
     if (!inviter.isUsable(numNode)) { return; }
     var textProperty = document.body.textContent ? 'textContent' : 'innerText';
-    return numNode[textProperty] = inviter.addresses.length;
-}
+    numNode[textProperty] = inviter.addresses.length;
+};
 
 // show friend div. display: inline-block;
 inviter.prototype.show = function(element) {
     element.style.display = 'inline-block';
-}
+};
 
 inviter.prototype.hide = function(element) {
     element.style.display = 'none';
-}
+};
 
 inviter.prototype.text = function(element) {
     var text = document.body.textContent ? 'textContent' : 'innerText';
     return element[text];
-}
+};
 
 inviter.prototype.getAllFriends = function() {
     var friends = [];
     var friendsNode = document.getElementById('inviter-friends');
     if (!inviter.isUsable(friendsNode)) { return friends; }
     var els = friendsNode.getElementsByTagName('div');
-    var elsLen = els.length;
-    for(var i=0; i<elsLen; i++) {
+    for(var i=0; i<els.length; i++) {
         friends.push(els[i]);
     }
     return friends;
-}
+};
 
 // adds or removes elements from the list of addresses
 inviter.prototype.toggleAddress = function(address) {
@@ -124,15 +123,13 @@ inviter.prototype.toggleAddress = function(address) {
     if (addressIdx >= 0) {
         inviter.addresses.splice(addressIdx, 1);
         var els = inviter.getByEmail(address);
-        var elsLen = els.length;
-        for(var i=0; i<elsLen; i++) {
+        for(var i=0; i<els.length; i++) {
             els[i].className = 'friend';
         }
 	} else {
 		inviter.addresses.push(address);
         var els = inviter.getByEmail(address);
-        var elsLen = els.length;
-        for(var i=0; i<elsLen; i++) {
+        for(var i=0; i<els.length; i++) {
             els[i].className = 'friend selected';
         }
 	}
@@ -141,23 +138,22 @@ inviter.prototype.toggleAddress = function(address) {
     if (inviter.isUsable(addressesNode)) {
         addressesNode.value = inviter.addresses.join(',');
     }
-}
+};
 
 inviter.prototype.getByEmail = function(address) {
     var friends = inviter.getAllFriends();
     return friends.filter(function(node) {
         return node.getAttribute('data-email') == address;
     });
-    return [];
-}
+};
 
 // function used to add delay to binding search field.
 var typewatch = function(){
     var timer = 0;
-    return function(callback, ms){
+    return function(callback, ms) {
         clearTimeout (timer);
         timer = setTimeout(callback, ms);
-    }  
+    };  
 }();
 
 
@@ -171,13 +167,12 @@ inviter.prototype.bindEvent = function(element, eventType, handler) {
             });
         }
     }
-}
+};
 
 inviter.prototype.clearSelection = function() {
     inviter.addresses = [];
     var friends = inviter.getAllFriends();
-    var elsLen = friends.length;
-    for(var i=0; i<elsLen; i++) {
+    for(var i=0; i<friends.length; i++) {
         friends[i].className = 'friend';
     }
     inviter.updateSelectedNumber();
@@ -185,13 +180,12 @@ inviter.prototype.clearSelection = function() {
     if (inviter.isUsable(addressesNode)) {
         addressesNode.value = '';
     }
-}
+};
 
 inviter.prototype.selectAll = function() {
     inviter.addresses = [];
     var friends = inviter.getAllFriends();
-    var elsLen = friends.length;
-    for(var i=0; i<elsLen; i++) {
+    for(var i=0; i<friends.length; i++) {
         var friend = friends[i];
         inviter.addresses.push(friend.getAttribute('data-email'));
         friend.className = 'friend selected';
@@ -201,7 +195,7 @@ inviter.prototype.selectAll = function() {
     if (inviter.isUsable(addressesNode)) {
         addressesNode.value = inviter.addresses.join(',');
     }
-}
+};
 
 inviter.prototype.showSelected = function() {
     var friends = inviter.getAllFriends();
@@ -210,7 +204,7 @@ inviter.prototype.showSelected = function() {
         var friend = friends[i];
         (friend.className === 'friend selected') ? inviter.show(friend) : inviter.hide(friend) ;
     }
-}
+};
 
 inviter = new inviter();
 
@@ -231,14 +225,14 @@ inviter.onDomReady(function() {
         }
 	});
     inviter.bindEvent(filterField, 'focusout', function() {
-        if (filterField.value == '') {
+        if (filterField.value === '') {
             filterField.value = INVITER_FILTER_BLANK;
         }
 	});
     inviter.bindEvent(document.getElementById('filterField'), 'keyup', function () {
         typewatch(function() {
             var filterVal = filterField.value;
-            if (filterVal == '') {
+            if (filterVal === '') {
                 for(var i=0; i<friendsSize; i++) {
                     inviter.show(friends[i]);
                 }
