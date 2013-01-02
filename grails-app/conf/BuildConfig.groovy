@@ -20,6 +20,7 @@ grails.project.dependency.resolution = {
     dependencies {
 		build "org.scribe:scribe:1.3.2"
 		runtime "org.scribe:scribe:1.3.2"
+        test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
     
     plugins {
@@ -30,6 +31,9 @@ grails.project.dependency.resolution = {
         compile ":mail:1.0"
         compile ":rest:0.7"
         runtime ":resources:1.2.RC2"
-        test ":spock:0.7"
+
+        test(":spock:0.7") {
+            exclude "spock-grails-support"
+        }
     }
 }
